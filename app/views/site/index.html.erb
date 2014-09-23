@@ -1,0 +1,18 @@
+<div class='container top'>
+<div class="jumbotron">
+  <h1>Keeping score had never been so easy...</h1>
+  <ul>
+  <% if user_signed_in? %>
+   <% if !current_user.games.empty? %>
+     <li class='nobullet'><%= link_to "Go to my dashboard", user_dashboard_path(current_user.id), class: "btn btn-primary btn-lg" %></li>
+     <% else %>
+         <%= form_for :game, url: user_games_path(current_user.id), method: :post do |f| %>
+                  <%= f.hidden_field :user_id, :value =>  current_user.id %>
+                  <%= f.submit "Start a new game", class: "btn btn-info btn btn-md",id: 'nextGame' %>  
+             
+                 <% end %>
+     <% end %>
+  <% end %>
+ </ul>
+  
+</div>

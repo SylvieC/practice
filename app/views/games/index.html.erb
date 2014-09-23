@@ -1,0 +1,70 @@
+<h1 class="center top allgames">All my games</h1>
+  
+
+<% if current_user.games.nil? %>
+<p> No game has been recorded yet %>
+<% else %>
+<% @games.reverse.each do |game| %>
+
+            
+     <div class="container eachGame">
+        <div class="well longScoregames"> 
+           <div class='row'>
+             <p class='center'> <%= game.created_at.ctime.slice(0,10) %>, <%= game.created_at.ctime.slice(-4,4)%></p>
+          </div>
+        <div class='row'>
+                 <% frames = game.frames.sort_by! { |frame| frame.num}  %> 
+                <% frames.each do |frame| %>
+                    <% if frame.num != 10 %>
+                     <div class="col-sm-1">
+                        <div class="well frameGames">
+                        <div class='frameNum'> <%=frame.num%></div>
+                           </br>
+                        <div class="row frameTurns">
+                          <div  class="col-sm-6 smallBoxgames smallBox1games "><%=frame.turn1%></div>
+                          <div class="col-sm-6 smallBoxgames smallBox2games"><%=frame.turn2%></div>
+                        </div>
+                        <div class="currentScore games"><%=frame.score%></div>
+                        </div>
+                    </div>
+                   
+                    <% else %>
+                         <div class="col-sm-2">
+                        <div class="well frameGames">
+                        <div class='frameNum'> <%=frame.num%></div>
+                      </br>
+                        <div class="row frameTurns10">
+                          <div  class="col-sm-4 smallBoxgames smallBox1games ten "><%=frame.turn1%></div>
+                          <div class="col-sm-4 smallBoxgames smallBox2games ten  ten2"><%=frame.turn2%></div>
+                          <div class="col-sm-4 smallBoxgames smallBox2games ten"><% if !frame.turn3.nil?%><%=frame.turn3%><%else%><span class='transparent'>0</span><% end%>
+                          </div>
+                        </div>
+                        <div class="currentScore games"><%= frame.score%></div>
+                     </div>
+                  </div>
+                   
+                 <div class="col-sm-1">
+                         <div class="well sc">
+                          <br/>
+                          <p class='sc'><%= game.frames.last.score %></p>
+                        </div>
+                    </div>
+                  </div>  
+                  
+            </div>
+               <% end %>
+                    <% end %> 
+      
+
+     </div>
+     <% if !game.comments.empty?%>
+       <ul>
+      <% game.comments.each do |comment| %>
+
+      <li><%= comment.body %></li>
+       <% end %>
+      </ul>
+     <% end %>
+    <% end %>
+
+  <% end %>  

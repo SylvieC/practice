@@ -1,0 +1,642 @@
+ <% if user_signed_in? %>
+<% if !current_user.games.last.nil? && current_user.games.last.is_completed == false %>
+ <%= include_gon %> 
+ <div class="container">
+        <div class="row top">
+            <div class="col-sm-4" id='pins'>
+               <%= image_tag('bowling.jpeg', class: 'img-responsive img-circle show',id: 'bowling') %> 
+            </div>
+            <div class="col-sm-8">
+                <div class="well" id="title">Today's Game <br/>
+                       <p id='date'><%= @game.created_at.ctime.slice(0,10) %>, <%= @game.created_at.ctime.slice(-4,4)%></p>
+                  </div>
+
+                         </div>
+        </div>  
+    </div>
+<div class="container top">
+        <div class="row">
+            <div class="col-sm-8" id="scoreBoard">
+                <div class="well">  
+                 <div class="row toprow">
+                 <!--  frame1 -->
+                    <div class="col-sm-2">
+                        <div class="well frame">
+                        <div class='frameNum'> 1</div>
+                      </br>
+                        <div class="row frameTurns">
+                          <div  class="col-sm-6 smallBox smallBox1 " id='frame1turn1'>
+                            <%if !@frames.first.turn1.nil?%>
+                              <% if @frames.first.category == 'strike' %>
+                                  
+                                  <script>$('div#frame1turn1').css('border-top', 'white')
+                                          $('div#frame1turn1').css('border-bottom', 'white') 
+                                  </script>
+                              <% else %>
+                                  <%=@frames[0].turn1%>
+                              <%end%>   
+                           <%else%>
+                               <span class='questionmark'>?</span>
+                           <%end%>
+
+                          </div>
+                          <div class="col-sm-6 smallBox smallBox2" id='frame1turn2'>
+                            <%if !@frames.first.turn2.nil?%>
+                                 <% if @frames.first.category == 'strike' %>
+                                    X
+                                <% elsif  @frames.first.category == 'spare'%>
+                                   /
+                                <% else %>
+                                  <%=@frames[0].turn2%>
+                                <%end%> 
+                            <%else%>
+                            <span class='opaque'>?</span>
+                            <%end%>
+
+                          </div>
+                        </div>
+                        <div class="currentScore" id='box1'>
+                            <%if !@array_score_at_frames[0].nil?%>
+                              <%=@array_score_at_frames[0]%>
+                            <%else%>
+                            <span class='opaque'>?</span>
+                            <%end%>
+                        </div>
+                        </div>
+                    </div>
+<!-- 
+                    frame2 -->
+                       <div class="col-sm-2">
+                        <div class="well frame">
+                        <div class='frameNum'> 2</div>
+                      </br>
+                        <div class="row frameTurns">
+                          <div  class="col-sm-6 smallBox smallBox1 " id='frame2turn1'>
+                            <%if !@frames[1].turn1.nil?%>
+                                <% if @frames[1].category == 'strike' %>
+                                  <script>$('div#frame2turn1').css('border-top', 'white')
+                                          $('div#frame2turn1').css('border-bottom', 'white') 
+                                  </script>
+                                <% else %>
+                                  <%=@frames[1].turn1%>
+                                <%end%>
+                            <%else%>
+                            <span class='questionmark'>?</span>
+                            <%end%>
+
+                          </div>
+                          <div class="col-sm-6 smallBox smallBox2" id='frame2turn2'>
+                            <%if !@frames[1].turn2.nil?%>
+                                  <% if @frames[1].category == 'strike' %>
+                                    X
+                                <% elsif  @frames[1].category == 'spare'%>
+                                   /
+                                <% else %>
+                                  <%=@frames[1].turn2%>
+                                <%end%> 
+                            <%else%>
+                            <span class='questionmark'>?</span>
+                            <%end%>
+
+                          </div>
+                        </div>
+                        <div class="currentScore" id='box2'>
+                            <%if !@array_score_at_frames[1].nil?%>
+                              <%=@array_score_at_frames[1]%>
+                            <%else%>
+                            <span class='opaque'>?</span>
+                            <%end%>
+                        </div>
+                        </div>
+                    </div>
+                 
+
+                   <!--  frame3 -->
+                      <div class="col-sm-2">
+                        <div class="well frame">
+                        <div class='frameNum'>3</div>
+                      </br>
+                        <div class="row frameTurns">
+                          <div  class="col-sm-6 smallBox smallBox1 " id='frame3turn1'>
+                            <%if !@frames[2].turn1.nil?%>
+                                  <% if @frames[2].category == 'strike' %>
+                                  <script>$('div#frame3turn1').css('border-top', 'white')
+                                          $('div#frame3turn1').css('border-bottom', 'white') 
+                                  </script>
+                                <% else %>
+                                  <%=@frames[2].turn1%>
+                                <%end%>
+                            <%else%>
+                            <span class='questionmark'>?</span>
+                            <%end%>
+
+                          </div>
+                          <div class="col-sm-6 smallBox smallBox2" id='frame3turn2'>
+                            <%if !@frames[2].turn2.nil?%>
+                                <% if @frames[2].category == 'strike' %>
+                                    X
+                                <% elsif @frames[2].category == 'spare'%>
+                                   /
+                                <% else %>
+                                   <%=@frames[2].turn2%>
+                                <% end %>
+                            <%else%>
+                            <span class='questionmark'>?</span>
+                            <%end%>
+
+                          </div>
+                        </div>
+                        <div class="currentScore" id='box3'>
+                            <%if !@array_score_at_frames[2].nil?%>
+                              <%=@array_score_at_frames[2]%>
+                            <%else%>
+                            <span class='opaque'>?</span>
+                            <%end%>
+                        </div>
+                        </div>
+                    </div>
+                   
+
+                    <!-- frame 4 -->
+                     <div class="col-sm-2">
+                        <div class="well frame">
+                        <div class='frameNum'>4</div>
+                      </br>
+                        <div class="row frameTurns">
+                          <div  class="col-sm-6 smallBox smallBox1 " id='frame4turn1'>
+                            <%if !@frames[3].turn1.nil?%>
+                               <% if @frames[3].category == 'strike' %>
+                                  <script>$('div#frame4turn1').css('border-top', 'white')
+                                          $('div#frame4turn1').css('border-bottom', 'white') 
+                                  </script>
+                                <% else %>
+
+                                  <%=@frames[3].turn1%>
+                                <%end%>
+                            <%else%>
+                            <span class='questionmark'>?</span>
+                            <%end%>
+
+                          </div>
+                          <div class="col-sm-6 smallBox smallBox2" id='frame4turn2'>
+                            <%if !@frames[3].turn2.nil?%>
+                                <% if @frames[3].category == 'strike' %>
+                                    X
+                                <% elsif @frames[3].category == 'spare'%>
+                                   /
+                                <% else %>
+                                   <%=@frames[3].turn2%>
+                                <% end %>
+                            <%else%>
+                            <span class='questionmark'>?</span>
+                            <%end%>
+
+                          </div>
+                        </div>
+                        <div class="currentScore" id='box4'>
+                            <%if !@array_score_at_frames[3].nil?%>
+                              <%= @array_score_at_frames[3]%>
+                            <%else%>
+                            <span class='opaque'>?</span>
+                            <%end%>
+                        </div>
+                        </div>
+                    </div>
+
+                  <!--   frame5 -->
+                    <div class="col-sm-2">
+                        <div class="well frame">
+                        <div class='frameNum'>5</div>
+                      </br>
+                        <div class="row frameTurns">
+                          <div  class="col-sm-6 smallBox smallBox1 " id='frame5turn1'>
+                            <%if !@frames[4].turn1.nil?%>
+                                <% if @frames[4].category == 'strike' %>
+                                  <script>$('div#frame5turn1').css('border-top', 'white')
+                                          $('div#frame5turn1').css('border-bottom', 'white') 
+                                  </script>
+                                <% else %>
+                                   <%=@frames[4].turn1%>
+                                <%end%>
+                            <%else%>
+                            <span class='questionmark'>?</span>
+                            <%end%>
+
+                          </div>
+                          <div class="col-sm-6 smallBox smallBox2" id='frame5turn2'>
+                            <%if !@frames[4].turn2.nil?%>
+                                 <% if @frames[4].category == 'strike' %>
+                                    X
+                                <% elsif  @frames[4].category == 'spare'%>
+                                   /
+                                <% else %>
+                                  <%=@frames[4].turn2%>
+                                <%end%> 
+                            <%else%>
+                            <span class='questionmark'>?</span>
+                            <%end%>
+
+                          </div>
+                        </div>
+                        <div class="currentScore" id='box5'>
+                            <%if !@array_score_at_frames[4].nil?%>
+                              <%=@array_score_at_frames[4]%>
+                            <%else%>
+                            <span class='opaque'>?</span>
+                            <%end%>
+                        </div>
+                        </div>
+                    </div>
+               </div>
+
+            <!--    frame6 -->
+                <div class="row">
+
+                        <div class="col-sm-2">
+                        <div class="well frame">
+                        <div class='frameNum'> 6</div>
+                      </br>
+                        <div class="row frameTurns">
+                          <div  class="col-sm-6 smallBox smallBox1 " id='frame6turn1'>
+                            <%if !@frames[5].turn1.nil?%>
+                               <% if @frames[5].category == 'strike' %>
+                                  <script>$('div#frame6turn1').css('border-top', 'white')
+                                          $('div#frame6turn1').css('border-bottom', 'white') 
+                                  </script>
+                                <% else %>
+
+                                  <%=@frames[5].turn1%>
+                                <%end%>
+                            <%else%>
+                            <span class='questionmark'>?</span>
+                            <%end%>
+
+                          </div>
+                          <div class="col-sm-6 smallBox smallBox2" id='frame6turn2'>
+                            <%if !@frames[5].turn2.nil?%>
+                                <% if @frames[5].category == 'strike' %>
+                                    X
+                                <% elsif  @frames[5].category == 'spare'%>
+                                   /
+                                <% else %>
+                                  <%=@frames[5].turn2%>
+                                <%end%> 
+                            <%else%>
+                            <span class='questionmark'>?</span>
+                            <%end%>
+
+                          </div>
+                        </div>
+                        <div class="currentScore" id='box6'>
+                            <%if !@array_score_at_frames[5].nil?%>
+                               <%=@array_score_at_frames[4]%>
+                            <%else%>
+                            <span class='opaque'>?</span>
+                            <%end%>
+                        </div>
+                        </div>
+                    </div>
+
+                  <!--   frame7 -->
+                   <div class="col-sm-2">
+                        <div class="well frame">
+                        <div class='frameNum'>7</div>
+                      </br>
+                        <div class="row frameTurns">
+                          <div  class="col-sm-6 smallBox smallBox1 " id='frame7turn1'>
+                            <%if !@frames[6].turn1.nil?%>
+                                <% if @frames[6].category == 'strike' %>
+                                  <script>$('div#frame7turn1').css('border-top', 'white')
+                                          $('div#frame7turn1').css('border-bottom', 'white') 
+                                  </script>
+                                <% else %>
+
+                                  <%=@frames[6].turn1%>
+                                <%end%>
+                               
+                            <%else%>
+                            <span class='questionmark'>?</span>
+                            <%end%>
+
+                          </div>
+                          <div class="col-sm-6 smallBox smallBox2" id='frame7turn2'>
+                            <%if !@frames[6].turn2.nil?%>
+                                <% if @frames[5].category == 'strike' %>
+                                    X
+                                <% elsif  @frames[5].category == 'spare'%>
+                                   /
+                                <% else %>
+                                  <%=@frames[5].turn2%>
+                                <%end%> 
+                            <%else%>
+                            <span class='questionmark'>?</span>
+                            <%end%>
+
+                          </div>
+                        </div>
+                        <div class="currentScore" id='box7'>
+                            <%if !@array_score_at_frames[6].nil?%>
+                              <%=@array_score_at_frames[6]%>
+                            <%else%>
+                            <span class='opaque'>?</span>
+                            <%end%>
+                        </div>
+                        </div>
+                    </div>
+
+                    <!-- frame8 -->
+                        <div class="col-sm-2">
+                        <div class="well frame">
+                        <div class='frameNum'> 8</div>
+                      </br>
+                        <div class="row frameTurns">
+                          <div  class="col-sm-6 smallBox smallBox1 " id='frame8turn1'>
+                            <%if !@frames[7].turn1.nil?%>
+                                <% if @frames[7].category == 'strike' %>
+                                  <script>$('div#frame8turn1').css('border-top', 'white')
+                                          $('div#frame8turn1').css('border-bottom', 'white') 
+                                  </script>
+                                <% else %>
+                                   <%=@frames[7].turn1%>
+                                <%end%>
+                            <%else%>
+                            <span class='questionmark'>?</span>
+                            <%end%>
+
+                          </div>
+                          <div class="col-sm-6 smallBox smallBox2" id='frame8turn2'>
+                            <%if !@frames[7].turn2.nil?%>
+                                 <% if @frames[7].category == 'strike' %>
+                                    X
+                                <% elsif  @frames[7].category == 'spare'%>
+                                   /
+                                <% else %>
+                                  <%=@frames[7].turn2%>
+                                <%end%> 
+                            <%else%>
+                            <span class='questionmark'>?</span>
+                            <%end%>
+
+                          </div>
+                        </div>
+                        <div class="currentScore" id='box8'>
+                            <%if !@array_score_at_frames[7].nil?%>
+                              <%=@array_score_at_frames[7]%>
+                            <%else%>
+                            <span class='opaque'>?</span>
+                            <%end%>
+                        </div>
+                        </div>
+                    </div>
+                  <!--   frame9 -->
+                         <div class="col-sm-2">
+                        <div class="well frame">
+                        <div class='frameNum'> 9</div>
+                      </br>
+                        <div class="row frameTurns">
+                          <div  class="col-sm-6 smallBox smallBox1 " id='frame9turn1'>
+                            <%if !@frames[8].turn1.nil?%>
+                                 <% if @frames[8].category == 'strike' %>
+                                  <script>$('div#frame9turn1').css('border-top', 'white')
+                                          $('div#frame9turn1').css('border-bottom', 'white') 
+                                  </script>
+                                <% else %>
+
+                                  <%=@frames[8].turn1%>
+                                <%end%>
+                            <%else%>
+                            <span class='questionmark'>?</span>
+                            <%end%>
+
+                          </div>
+                          <div class="col-sm-6 smallBox smallBox2" id='frame9turn2'>
+                            <%if !@frames[8].turn2.nil?%>
+                                 <% if @frames[8].category == 'strike' %>
+                                    X
+                                <% elsif  @frames[8].category == 'spare'%>
+                                   /
+                                <% else %>
+                                  <%=@frames[8].turn2%>
+                                <%end%> 
+                            <%else%>
+                            <span class='questionmark'>?</span>
+                            <%end%>
+
+                          </div>
+                        </div>
+                        <div class="currentScore" id='box9'>
+                            <%if !@array_score_at_frames[8].nil?%>
+                                 <%=@array_score_at_frames[8]%>
+                            <%else%>
+                            <span class='opaque'>?</span>
+                            <%end%>
+                        </div>
+                        </div>
+                    </div>
+                   <!--  frame10 --> 
+                         <div class="col-sm-3">
+                        <div class="well frame" id='dashboard10'>
+                        <div class='frameNum'>10</div>
+                      </br>
+                        <div class="row frameTurns frameTurns10">
+                          <div  class="col-sm-4 smallBox smallBox1 ten" id='frame10turn1'>
+                            <%if !@frames[9].turn1.nil?%>
+                                  <% if @frames[9].turn1 == 10 %>
+                                     X
+                                  <%  else %>
+                                  <%= @frames[9].turn1 %>
+                                  <% end %>
+                            <%else%>
+                            <span class='questionmark'>?</span>
+                            <%end%>
+
+                          </div>
+                          <div class="col-sm-4 smallBox smallBox2  ten" id='frame10turn2'>
+                            <%if !@frames[9].turn2.nil?%>
+                                 <% if @frames[9].turn2 == 10 %>
+                                    X
+                                <% elsif  @frames[9].category == 'spare'%>
+                                   /
+                                <% else %>
+                                  <%=@frames[9].turn2%>
+                                <%end%> 
+                            <%else%>
+                            <span class='questionmark'>?</span>
+                            <%end%>
+
+                          </div>
+                             <div class="col-sm-4 smallBox smallBox2 ten" id='frame10turn3'>
+                            <%if !@frames[9].turn3.nil?%>
+                              <%=@frames[9].turn3%>
+                            <%else%>
+                            <span class='questionmark'>?</span>
+                            <%end%>
+
+                          </div>
+
+                        </div>
+                        <div class="currentScore" id='box10'>
+                            <%if !@array_score_at_frames[9].nil?%>
+                              <%=@array_score_at_frames[9]%>
+                            <%else%>
+                            <span class='opaque'>?</span>
+                            <%end%>
+                        </div>
+                        </div>
+                    </div>
+
+
+                </div>
+              </div>
+            </div>
+
+
+
+       <div class="col-sm-4 scorebox">
+        <div class="row">
+          <div class="well">Enter score</div>
+            <div class="row scoring">
+              <div class="col-sm-2">
+                    <button name='button' class='btn btn-info btn-lg  add_score'id="key0">0</button>
+                    
+              </div>
+              <div class="col-sm-2">
+                <button name='button' class='btn btn-info btn-lg  add_score' id='key1'>1</button>
+
+              </div>
+              <div class="col-sm-2">
+                 <button name='button' class='btn btn-info btn-lg  add_score' id='key2'>2</button>
+                       
+              </div>
+              <div class="col-sm-2">
+                 <button name='button' class='btn btn-info btn-lg  add_score' id="key3">3</button> 
+              </div>
+              <div class="col-sm-2">
+                 <button name='button' class='btn btn-info btn-lg  add_score' id= 'key4'>4</button> 
+              </div>
+              <div class="col-sm-2">
+                <button name='button' class='btn btn-info btn-lg  add_score' id='key5'>5</button> 
+              </div>
+            </div>
+            </br>
+            </div>
+            <div class='row'>
+            <div class="col-sm-2 col-sm-offset-1">
+                <button name='button' class='btn btn-info btn-lg  add_score' id='key6'>6</button>
+            </div>
+            <div class="col-sm-2">
+              <button name='button' class='btn btn-info btn-lg  add_score' id='key7'>7</button>
+               
+            </div>
+            <div class="col-sm-2">
+              <button name='button' class='btn btn-info btn-lg  add_score' id='key8'>8</button>           
+               </div>
+            <div class="col-sm-2">
+               <button name='button' class='btn btn-info btn-lg  add_score'id='key9'>9</button> 
+            </div>
+             <div class="col-sm-2">
+                <button name='button' class='btn btn-info btn-lg  add_score' id='key10'>10</button> 
+            </div>
+            
+          </div>
+
+        </br>
+
+           
+              <div class="col-sm-3 col-sm-offset-3">
+                 <button name='button' class='btn btn-warning btn-lg  add_score' id='add_spare'>/</button> 
+              </div>
+              <div class="col-sm-3">
+                 <button name='button' class='btn btn-warning btn-lg  add_score' id="add_strike">X</button> 
+              </div>
+
+             
+              
+            </div>
+            </br>
+            <div class='row submitscores'>
+               <%= form_for :game, url: user_games_path(current_user.id), method: :post do |f| %>
+              
+                  <%= f.hidden_field :user_id, :value =>  current_user.id %>
+                  <%= f.submit "Start a new game", class: "btn btn-primary btn btn-lg",id: 'nextGame' %>  
+             <%end%>
+            </div>
+            
+            </div>
+          </div>
+       
+   
+
+
+  </div>
+  
+
+        </div> 
+            </div>
+          </div>
+
+            
+   <div class="container" >
+             <div class="grey">
+            <div class="container">
+                <div class="well col-sm-8" id='commentsBox'><h3 class='center'> Comments</h3>
+              <!--    form for comments -->
+         <%= form_for :comment, url: user_game_comments_path(current_user.id, @game.id), method: :post do |f| %>
+          <%= f.hidden_field :game_id, :value => @game.id %>
+         <%= f.text_area :body , :rows => 5, :cols => 100 %><br/></br>
+         <%= f.submit "Add comment", class: "btn btn-primary btn btn-md",id: 'commentButton' %>
+          <%end%>
+
+
+
+ 
+                 </div> 
+            </div>
+        </div>
+      
+       <div class='container '>
+        <% if !@game.comments.empty? %>
+        <% @game.comments.each do |comment|%> 
+         <div class="grey addedcomments">
+            <div class="container">
+                <div class="well">
+                  <ul>
+                  
+
+                  <li class='commentdashboard'><%=comment.body %></li>
+                 
+                
+                </ul>
+                </div> 
+            </div>
+        </div>
+      </div>
+       <% end %>
+       <% end %>
+      
+
+      <% else %>
+        <div class="container">
+        <div class="row top">
+            <div class="col-sm-4" id='pins'>
+               <%= image_tag('bowling.jpeg', class: 'img-responsive img-circle show') %> 
+            </div>
+            <div class="col-sm-8">
+                <div class="well" id="title">My Game </div>
+                 
+                 
+                     <%= form_for :game, url: user_games_path(current_user.id), method: :post do |f| %>
+                  <%= f.hidden_field :user_id, :value =>  current_user.id %>
+                  <%= f.submit "Start a new game", class: "btn btn-info btn btn-md",id: 'nextGame' %>  
+             
+                 <% end %>
+               
+        <% end %>      
+            </div>
+        </div>  
+    </div>
+
+    <% end %>
+
+
+

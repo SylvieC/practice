@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BowlingApp</title>
+  <%= include_gon %>
+  <%= Gon::Base.render_data({}) %>
+  <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+  <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+  <%= csrf_meta_tags %>
+
+  <!-- App-like mobile view -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, height=device-height, user-scalable=no"/>
+
+  <!-- Jquery -->
+  <script src="http://code.jquery.com/jquery-1.10.1.min.js"></script>
+
+  <!-- Bootstrap JS -->
+  <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script>
+  <!--  for icon -->
+  <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.css" rel="stylesheet">
+  <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css" rel="stylesheet">
+  <!-- Normalize -->
+  <link rel="stylesheet" src="http://normalize-css.googlecode.com/svn/trunk/normalize.css" />
+  <link href='http://fonts.googleapis.com/css?family=Belleza' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Amarante' rel='stylesheet' type='text/css'>
+  <link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300' rel='stylesheet' type='text/css'>
+
+</head>
+<body class="container-fluid">
+  <div class='col-xs-12'>
+  <%= render partial: "/layouts/navbar" %>
+</div>
+<% if notice %>
+  <p class="alert alert-success"><%= notice %></p>
+<% end %>
+<% if alert %>
+  <p class="alert alert-danger"><%= alert %></p>
+<% end %>
+<%= yield %>
+
+</body>
+</html>
